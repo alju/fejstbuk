@@ -2,15 +2,7 @@ package org.openblend.fejstbuk.domain;
 
 import java.util.Date;
 import java.util.Set;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.PostLoad;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
@@ -96,7 +88,7 @@ public class User extends AbstractEntity {
         this.friends = friends;
     }
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     @Where(clause = "dtype='Status' or dtype='Image' or dtype='Question'")
     public Set<Linked> getPosts() {

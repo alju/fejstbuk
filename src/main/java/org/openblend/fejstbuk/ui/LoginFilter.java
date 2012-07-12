@@ -53,6 +53,7 @@ public class LoginFilter implements Filter {
                !uri.startsWith("/register") &&
                !uri.startsWith("/_common") &&
                !uri.startsWith("/javax.faces.resource/") &&
+               !uri.startsWith("/rest/") &&
                !uri.startsWith("/h2/");
 
     }
