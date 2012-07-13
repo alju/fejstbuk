@@ -177,4 +177,10 @@ public class User extends AbstractEntity {
     void postLoad() {
         friendCount = getFriends().size();
     }
+
+
+    @Transient
+    public String getFullName() {
+        return name + " " + surname;
+    }
 }

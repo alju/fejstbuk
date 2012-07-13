@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+        >
+
+<ui:composition template="/layout/template.xhtml">
+    <ui:define name="pageTitle">Conversations</ui:define>
+    <ui:define name="sidebar">
+        <ui:include src="/layout/includes/profile.xhtml"/>
+    </ui:define>
+    <ui:define name="content">
+        <h1>Conservations</h1>
+        <ul class="messagelist">
+            <ui:repeat value="#{conversations}" var="conv">
+            <li class="message unread">
+                <span class="datetime">
+                    <h:outputText value="#{newsAction.getTimeDiff(conv.lastMessage.timestamp)}">
+                        <f:convertDateTime pattern="H:mm 'ago'" />
+                    </h:outputText>
+                </span>
+                <a href="/conversation/#{conv.id}">
+					<span class="photo">
+							<img src="/rest/file/download-avatar/#{conv.lastMessage.user.id}"
+                                 alt="#{conv.lastMessage.user.fullName}"/>
+					</span>
+                    <span class="user">#{conv.lastMessage.user.fullName}</span>
+                    <span class="cms">#{conv.lastMessage.recap}</span>
+                </a>
+            </li>
+            </ui:repeat>
+        </ul>
+        <h:form styleClass="replymessageform">
+            <fieldset>
+                <h:outputLabel for="message">Your message:</h:outputLabel>
+                <h:inputTextarea id="message" rows="4" cols="50" value="#{newConvAction.text}"></h:inputTextarea>
+                <h:outputLabel for="recipient">Recipient:</h:outputLabel>
+                <h:selectOneMenu id="recipient" value="#{newConvAction.friendID}">
+                    <f:selectItems value="#{friends}" var="fr" itemLabel="#{fr.fullName}" itemValue="#{fr.id}"/>
+                </h:selectOneMenu>
+                <h:commandButton value="Create new" action="#{newConvAction.create}"/>
+            </fieldset>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>

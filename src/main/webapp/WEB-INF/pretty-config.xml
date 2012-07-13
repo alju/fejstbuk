@@ -36,6 +36,16 @@
         <view-id value="/profile.xhtml"/>
     </url-mapping>
 
+    <url-mapping id="conversation">
+        <pattern value="/conversation/#{conversationAction.convID}"/>
+        <view-id value="/message.xhtml"/>
+    </url-mapping>
+
+    <url-mapping id="conversations">
+        <pattern value="/conversations"/>
+        <view-id value="/messages.xhtml"/>
+    </url-mapping>
+
     <url-mapping id="profile-edit">
         <pattern value="/profile-edit"/>
         <view-id value="/profile-edit.xhtml"/>

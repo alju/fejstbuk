@@ -171,7 +171,7 @@ public class FacebookDAO {
     public User findUser(String username) {
         TypedQuery<User> query = em.createQuery("select u from User u where u.email = :u", User.class);
         query.setParameter("u", username);
-        return query.getSingleResult();
+        return getSingleResult(query);
     }
 
     public boolean createUser(User user) {
@@ -181,6 +181,14 @@ public class FacebookDAO {
         }
 
         return false;
+    }
+
+    public<T> T getSingleResult(TypedQuery<T> query) {
+        List<T> results = query.getResultList();
+        if(results.size() != 0) {
+            return results.get(0);
+        }
+        return null;
     }
 
 }

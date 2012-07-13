@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+        >
+
+<ui:composition template="/layout/template.xhtml">
+    <ui:define name="pageTitle">Conversation</ui:define>
+    <ui:define name="sidebar">
+        <ui:include src="/layout/includes/profile.xhtml" />
+    </ui:define>
+    <ui:define name="content">
+    <h1>Conversation with #{conversationAction.peer.name} #{conversationAction.peer.surname}</h1>
+		<div class="conversation">
+			<a class="back" href="/messages.xhtml">Back to <strong>Messages</strong></a>
+			<ul class="messagelist">
+                <ui:repeat value="#{conversation}" var="msg">
+				<li class="message">
+					<span class="datetime">
+                        <h:outputText value="#{newsAction.getTimeDiff(msg.timestamp)}">
+                            <f:convertDateTime pattern="H:mm 'ago'" />
+                        </h:outputText>
+                    </span>
+					<span class="photo">
+						<img src="/rest/file/download-avatar/#{msg.user.id}" alt="#{msg.user.name} #{msg.user.surname}" />
+					</span>
+					<a class="user" href="/profile-friend.html">#{msg.user.name} #{msg.user.surname}</a>
+					<div class="cms">
+						<p>#{msg.text}</p>
+					</div>
+				</li>
+                </ui:repeat>
+			</ul>
+		</div>
+		<h:form styleClass="replymessageform">
+			<fieldset>
+				<h:outputLabel for="message">Your message:</h:outputLabel>
+				<h:inputTextarea id="message" rows="4" cols="50" value="#{sendMsgAction.text}"></h:inputTextarea>
+
+				<h:commandButton value="Reply to this message" action="#{sendMsgAction.send(conversationAction.convID)}"/>
+			</fieldset>
+		</h:form>
+    </ui:define>
+</ui:composition>
+</html>
